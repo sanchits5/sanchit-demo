@@ -1,0 +1,24 @@
+server:
+    port: 8888
+
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            routes:
+                - id: product-serviceRoute
+                  uri: lb://product-service
+                  predicates:
+                      - Path=/product/**
+                - id: shoppingCartRoute
+                  uri: lb://shoppingCart
+                  predicates:
+                      - Path=/shopping-cart/**
+            discovery:
+                locator:
+                    enabled: true
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8700/eureka/
